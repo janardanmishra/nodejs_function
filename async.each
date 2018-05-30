@@ -1,3 +1,5 @@
+Syntax
+
 async.each(urls, function(url, callback){
         console.log("Grabbing Dataset from " + url);
         makeRequest(url, function(){
@@ -12,3 +14,50 @@ async.each(urls, function(url, callback){
           }
      }
     );
+
+
+
+
+
+
+
+
+Example
+
+router.get('/getUserEmails', function(req, res, next){
+    Users.find({}, function (err, allUsers) {
+        if(err || !allUsers){
+            res.status(HttpStatus.NOT_FOUND).json({
+                status: HttpStatus.NOT_FOUND,
+                result: 'Users not found.',
+                data: []
+            });
+        } else{
+            var userArray = [];
+            async.each(allUsers, function(user, cb){
+
+                var userDet = {username:user.username, email:user.email};
+
+                userArray.push(userDet);
+                cb();
+
+            }, function (err) {
+                if(err){
+                    res.status(HttpStatus.BAD_REQUEST).json({
+                        status: HttpStatus.BAD_REQUEST,
+                        result: 'Error occurred while fetching user data.',
+                        data: err
+                    });
+                } else {
+                    res.status(HttpStatus.OK).json({
+                        status: HttpStatus.OK,
+                        result: 'User data fetched successfully.',
+                        data: userArray
+                    });
+                }
+            });
+        }
+    });
+});
+
+
