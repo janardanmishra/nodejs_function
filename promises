@@ -1,0 +1,44 @@
+https://www.guru99.com/node-js-promise-generator-event.html
+
+
+//// Callbacks to promises
+
+var Promise = require('promise');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost/EmployeeDB';
+
+MongoClient.connect(url)
+    .then(function(err, db) {  // callback function
+        db.collection('Employee').updateOne({
+            "EmployeeName": "Martin"
+        }, {
+            $set: {
+                "EmployeeName": "Mohan"
+            }
+        });
+    }); 
+
+
+
+
+//// Dealing with nested promises
+
+var Promise = require('promise');
+var MongoClient = require('mongodb').MongoClient;
+var url = 'mongodb://localhost/EmployeeDB';
+MongoClient.connect(url)
+
+.then(function(db) {
+    db.collection('Employee').insertOne({
+        Employeeid: 4,
+        EmployeeName: "NewEmployee"
+    })
+
+    .then(function(db1) {
+        db1.collection('Employee').insertOne({
+            Employeeid: 5,
+            EmployeeName: "NewEmployee1"
+        })
+    })
+});
+
