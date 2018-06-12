@@ -1,0 +1,16 @@
+router.post('/getKey', function(req, res){
+    if(req.body.username){
+        localTransaction.find({user:req.body.username},{ key:1 ,user:1}, function (err, userData) {
+            if(err || !userData){
+                res.json({ "status": "ERROR", msg: "User Not Found" });
+            } else {
+                res.json({"status": "ok", msg: "transaction Hash fetched successfully.", "data": userData});
+                }
+        });
+    }else{
+        res.json({"status":"ok",msg:"User details not found."})
+    }
+});
+
+
+// get all key from username
