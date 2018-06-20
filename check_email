@@ -1,0 +1,15 @@
+
+
+router.post('/checkEmail', function (req, res) {
+    User.findOne({ email: req.body.email }, function (err, user) {
+        if (err) {
+            res.json({ "status": "ERROR", "msg": "Error occurred please try again." });
+        } else {
+            if (user) {
+                res.json({ "status": "ERROR", "msg": "Email already exist." });
+            } else {
+                res.json({ "status": "OK", "msg": "Email available." });
+            }
+        }
+    });
+});
