@@ -1,0 +1,14 @@
+
+router.post('/checkUsername', function (req, res) {
+    User.findOne({ username: req.body.username }, function (err, user) {
+        if (err) {
+            res.json({ "status": "ERROR", "msg": "Error occurred please try again." });
+        } else {
+            if (user) {
+                res.json({ "status": "ERROR", "msg": "Username already exist." });
+            } else {
+                res.json({ "status": "OK", "msg": "Username available." });
+            }
+        }
+    });
+});
