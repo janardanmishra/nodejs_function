@@ -1,0 +1,18 @@
+
+
+router.post('/getRequestbyUsername', function(req, res, next){
+
+    if(req.body.username){
+        user.find({username:req.body.username}, function (err, userData) {
+            if(err || !userData){
+                res.json({ "status": "Error", "msg": "Error in fetching Request." });
+            } else{
+                res.json({ "status": 'ok', "message": "Request details fetched successfully","data":userData });
+            }
+        });
+    }else{
+        res.json({ "status": "Error", "msg": "Request details not found." });
+    }
+
+});
+
