@@ -4,7 +4,7 @@
 router.post('/getRequestByID', function(req, res, next){
 
     if(req.body.id){
-        support.findOne({_id:req.body.id},null,{sort:{createdAt:-1}}, function (err, userData) {
+        user.findOne({_id:req.body.id},null,{sort:{createdAt:-1}}, function (err, userData) {
             if(err || !userData){
                 res.json({ "status": "Error", "msg": "Error in fetching Request." });
             } else{
