@@ -61,3 +61,34 @@ router.get('/getUserEmails', function(req, res, next){
 });
 
 
+
+
+
+
+
+
+router.get('/getTotalLendingAmount',jwtauth, function(req,res){
+    lendCoins.find({}).exec(function(err, lentAmount) {
+        if (err) {
+            res.json({"status": "ERROR", "msg": "No transactions found"});
+        } else{
+            var sum = 0;
+            async.each(lentAmount, function (lentAmount, err) {
+                if (lentAmount) {
+                    console.log("user" + lentAmount.lentUSDAmount);
+                    sum = sum + lentAmount.lentUSDAmount;
+                } else {
+                    console.log('Hello err' + err);
+                    res.json({"status":"ERROR", "msg":"No transactions found",});
+                }
+            });
+            res.json({"status":"OK", "msg":"Transactions fetched successfully", "data":sum});
+
+        console.log('sum' + sum);
+        }
+    });
+});
+
+
+
+
