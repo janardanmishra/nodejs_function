@@ -1,0 +1,133 @@
+
+router.post('/save_notification',upload.any(),function(req, res, next){
+    //req.body.username, req.body.title, req.body.description,isdeleted, notificationimage1(image)
+       Admin.findOne({username: req.body.username}, function (err, adminDetails) {
+                if (err || !adminDetails) { //|| !userData
+                    res.json({"status": "ERROR", "msg": "Error occurred while processing."});
+                } else {
+                    if (adminDetails) {
+
+                        var notificationimage1 = '';
+                        if (req.files && req.files[0]) {
+                            notificationimage1 = req.files[0].filename;
+                        }
+
+                        var head_details = new notification({
+                            username: req.body.username,
+                            title: req.body.title,
+                            description: req.body.description,
+                            isdeleted: false,
+                            notificationimage1: notificationimage1
+
+                        });
+                        console.log(head_details);
+                        head_details.save(function (err, result) {
+                            if (err) {
+                                res.send(err);
+                            }
+                            else {
+                                res.json({status: 'ok', message: "notification saved successfully",data:head_details});
+                            }
+                        });
+
+                    }
+                }
+
+        });
+ });
+
+router.post('/delete_notification',function (req, res, next) {
+    notification.findOne({_id : req.body._id}, function (err, userDetails) {
+        if(err || !userDetails){
+            res.json({"status":"ERROR", "msg": "Error occurred while processing." });
+        }else{
+            notification.findOneAndUpdate(
+                {_id : req.body._id},
+                {$set:{isdeleted:true}},
+                {new: true},
+                function (err, userDetails) {
+                    if(err || !userDetails){
+                        res.json({"status":"ERROR", "msg": "Error occurred while processing.", "ERR":err});
+                    }else{
+                        res.json({"status":"OK", "msg":"notification deleted successfully", "data":userDetails });
+                    }
+                }
+            );
+        }
+    });
+});
+
+
+
+router.post('/view_notificationbyID',function (req, res, next) {
+    notification.findOne({_id : req.body._id}, function (err, userDetails) {
+        if (err || !userDetails) {
+            res.json({"status": "ERROR", "msg": "Error occurred while processing."});
+        } else {
+            console.log('userDetails '+ userDetails);
+            console.log('userDetails.isdeleted ' + userDetails.isdeleted);
+                if (userDetails.isdeleted === false){
+                    res.json({"status":"OK", "msg":"notification fetch successfully", "data":userDetails });
+                } else{
+                    res.json({"status":"OK", "msg":"notification is Deleted by admin"});
+
+                }
+        }
+    });
+});
+
+
+
+router.get('/GetALLNotification',function (req, res, next) {
+    notification.find({isdeleted: false}, function (err, userDetails) {
+        if (err || !userDetails) {
+            res.json({"status": "ERROR", "msg": "Error occurred while processing."});
+        } else {
+            res.json({"status":"OK", "msg":"notification fetch successfully", "data":userDetails });
+        }
+    });
+});
+
+
+
+////////////schema//////////
+
+
+
+var mongoose = require('mongoose');
+
+var notificationSchema = new mongoose.Schema({
+   username: {
+       type: String
+   },
+    title: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    isdeleted: {
+        type: Boolean
+    },
+    notificationimage1: {
+            type:String
+    }
+
+},{
+   timestamps: true
+});
+
+var notification = mongoose.model('notification', notificationSchema);
+
+module.exports = notification;
+
+
+
+
+
+
+
+
+
+
+
