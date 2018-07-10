@@ -59,6 +59,31 @@ router.post('/delete_notification',function (req, res, next) {
 
 
 
+router.post('/update_notification', function (req, res, next) {
+    notification.findOne({_id: req.body._id}, function (err, notificationDetails) {
+        if (err || !notificationDetails) {
+            res.json({"status": "ERROR", "msg": "notification not found"});
+        } else {
+            notification.findOneAndUpdate({_id: req.body._id}, {
+                    $set: {
+                        title: req.body.title,
+                        description: req.body.description
+                    }
+                }, {new: true},
+                function (err, updateDetails) {
+                    if (err || !updateDetails) {
+                        req.json({"status": "ERROR", "msg": "notification not update", "ERR": err});
+                    } else {
+                        res.json({"status": "ok", "msg": "notification updated successfully", "data": updateDetails})
+                    }
+                }
+            );
+        }
+    });
+});
+
+
+
 router.post('/view_notificationbyID',function (req, res, next) {
     notification.findOne({_id : req.body._id}, function (err, userDetails) {
         if (err || !userDetails) {
