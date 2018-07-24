@@ -1,0 +1,12 @@
+
+
+router.get('/GetALLNotification',function (req, res, next) {
+    notification.find({},null,{sort:{createdAt:-1}, limit: 2} function (err, userDetails) {
+        if (err || !userDetails) {
+            res.json({"status": "ERROR", "msg": "Error occurred while processing."});
+        } else {
+            res.json({"status":"OK", "msg":"notification fetch successfully", "data":userDetails });
+        }
+    });
+});
+
