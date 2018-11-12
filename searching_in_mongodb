@@ -1,0 +1,15 @@
+
+
+router.post('/search', function (req, res, next) {
+    Users.find({username: new RegExp(req.body.search)}, function (err, userDet) {
+        if (err) {
+            res.json({"status":"ERROR","msg":"Result not found","err":err });
+        } else {
+            if (userDet) {
+                res.json({"status":"OK","msg":"Result found","count":userDet.length,"data":userDet });
+            } else {
+                res.json({"status":"ERROR","msg":"Details not found.","data":[],"count":0 });
+            }
+        }
+    });
+});
