@@ -24,6 +24,44 @@ router.get('/getTotalBalanceofuser', function(req,res){
 });
 
 
+//////////////// with where condition ///////////////////
+
+
+router.get('/getTotalBalance', function(req,res){
+        User.aggregate([
+            {
+             "$match": { 
+                "trans_type": "salery"  
+                }
+            },
+            {$group:{ _id: {},total:{$sum:"$balance"}}}]).exec(function (err, trans) {
+            //console.log(trans[0].total)
+            if(err || !trans){
+                res.status(HttpStatus.NOT_FOUND).json({
+                    status: HttpStatus.NOT_FOUND,
+                    result: 'Total balance in the system NOT fetched successfully.',
+                    data: err
+                });
+            }else{
+                res.status(HttpStatus.OK).json({
+                    status: HttpStatus.OK,
+                    result: 'Total balance in the system fetched successfully.',
+                    data: trans[0].total
+                });
+            }
+    
+        })
+    
+    
+    });
+
+
+
+
+
+
+
+
 
 
 
