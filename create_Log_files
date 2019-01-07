@@ -1,0 +1,9 @@
+
+////////////Janardan   Header //////////////
+var fs = require('fs');
+var infoStream = fs.createWriteStream('public/logs/log.txt', {flags: 'a'});
+
+/////////////// in API ////////////
+var message = new Date().toISOString() +" msg : log msg saved successfully. \n";
+infoStream.write(message);
+
