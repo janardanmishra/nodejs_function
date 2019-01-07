@@ -1,0 +1,10 @@
+
+set in app.js.
+syntax:
+app.use('/resources',express.static(__dirname + '/images'));
+
+Example:
+app.use('/doc',express.static(__dirname + '/new_doc/public/doc'));
+
+URL:
+http://localhost:3000/doc/newfile.doc
