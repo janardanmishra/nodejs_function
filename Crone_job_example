@@ -1,0 +1,18 @@
+npm install cron
+
+
+var CronJob = require('cron').CronJob;
+
+
+var testingjob = new CronJob('10 0 * * *', function() {
+    
+    // run on every 5 sec ==> '*/5 * * * * *'
+    // run on every night 12:10 ==> '10 0 * * *'
+    // run on every afternoon at 12:04 ==>'4 12 * * *'
+    // run on every afternoon at 2:05 ==>'5 14 * * *'
+    
+    console.log('helloooooo');
+
+   });
+
+testingjob.start();
