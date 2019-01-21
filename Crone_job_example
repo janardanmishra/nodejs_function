@@ -10,6 +10,8 @@ var testingjob = new CronJob('10 0 * * *', function() {
     // run on every night 12:10 ==> '10 0 * * *'
     // run on every afternoon at 12:04 ==>'4 12 * * *'
     // run on every afternoon at 2:05 ==>'5 14 * * *'
+    // run on every day at 12:00 AM ==>'0 0 0 * * *'
+
     
     console.log('helloooooo');
 
