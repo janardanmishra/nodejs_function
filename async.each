@@ -1,3 +1,11 @@
+///// npm install///
+npm install --save async
+
+///////Set on header ///////
+var async = require('async');
+
+
+
 Syntax
 
 async.each(urls, function(url, callback){
@@ -90,5 +98,21 @@ router.get('/getTotalAmount',jwtauth, function(req,res){
 });
 
 
-
+////////////////////////////////////////////////////////////
+User.find({}, function (err, Userdata) {
+    console.log("Data==========>");
+    if (err) {
+        console.log("Profile preferences not fetched.");
+    } else {
+        async.each(Userdata, function (Data, err) {
+            if (Userdata) {
+                console.log("------------------------");
+                console.log(Data.createdAt);
+            } else {
+                console.log("Err on async.each");
+                console.log(err);
+            }
+        });
+}
+});
 
