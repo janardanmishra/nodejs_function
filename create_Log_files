@@ -7,3 +7,11 @@ var infoStream = fs.createWriteStream('public/logs/log.txt', {flags: 'a'});
 var message = new Date().toISOString() +" msg : log msg saved successfully. \n";
 infoStream.write(message);
 
+
+////////////////////////////////////////////////////////////////////////////
+
+
+var message = new Date().toISOString() + "  API: APIName , userid: " + req.body.userid + "  , msg : Msg.  \n";
+infoStream.write(message);
+
+
