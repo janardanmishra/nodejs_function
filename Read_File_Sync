@@ -1,0 +1,19 @@
+var path = require('path');
+var filename = path.join(__dirname, 'test.txt');
+var fs = require('fs');
+
+
+/////////// API ////////////
+router.get('/readFileWithAwait', function (req, res, next) {
+    fileReadSync(filename, function (cb) {
+        res.json({ "data": cb });
+    });
+});
+
+
+///////// function ////////////
+function fileReadSync(filename, cb) {
+    var a = fs.readFileSync(filename, 'utf8');
+    cb(a);
+}
+
