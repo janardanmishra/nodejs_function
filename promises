@@ -57,6 +57,47 @@ callbackFunction((err, ret) => {
   console.log(ret);
 });
 
+//////////////////////   Testing for Promses /////////////////
+
+var Promise = require('promise');
+
+
+router.get('/testPromises', function (req, res, next) {
+
+    promiseObj.then(function (result) {
+        console.log("Result==> ");
+        res.json({"Promises work successfully":result});
+    }).catch(function (err) {
+        console.log("errrr==> ");
+        res.json({"Err occered":err});
+    });
+
+});
+
+
+var promiseObj = new Promise(function (resolve, reject) {
+
+    Users.find({}, function (err, data) {
+        if (err) {
+            reject(err);
+        } else {
+            resolve(data);
+        }
+    })
+});
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 
 
 
