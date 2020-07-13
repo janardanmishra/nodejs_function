@@ -1,1 +1,29 @@
+///Get array data from recursion
+
+
+                let i = 0;
+                let MatchedData = [];
+
+                function callGetQuestion() {
+                    if (i == Data.questionIdList.length) {
+                        res.json({ status: "OK", msg: "Data found sucessfully." });
+                    } else {
+                        var value1 = Data.questionIdList[i]
+                        GetQuestion(value1)
+                        i++
+                    }
+                }
+                callGetQuestion()
+
+                function GetQuestion(value) {
+                    console.log("value--->", value);
+                   //  Wrrite your code here just like save
+                   
+                   
+                   
+                   
+                   
+                }
+
+
 
